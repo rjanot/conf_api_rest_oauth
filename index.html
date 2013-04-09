@@ -24,6 +24,12 @@
     <!--[if lt IE 9]>
     <script src="lib/js/html5shiv.js"></script>
     <![endif]-->
+
+    <style>
+        .red {
+            color:red;
+        }
+    </style>
 </head>
 
 <body>
@@ -79,20 +85,17 @@
                 </div>
                 <div>
                     <ul>
-                        <li style="text-align: left;" class="fragment" data-fragment-index="0">Fournir des informations à des partenaires</li>
-                        <li style="text-align: left;" class="fragment" data-fragment-index="1">Recevoir des informations des partenaires</li>
-                        <li style="text-align: left;" class="fragment" data-fragment-index="2">Charger / rafraichir un bloc de manière asynchrone</li>
-                        <li style="text-align: left;" class="fragment" data-fragment-index="3">Charger / rafraichir toute la page de manière asynchrone (Backbone, Angular JS...)
-                    </li>
-                    <li style="text-align: left;" class="fragment" data-fragment-index="4">
-                        <span style="letter-spacing: -0.02em;">Application mobile</span>
-                    </li>
+                        <li class="fragment" data-fragment-index="0">Fournir des informations à des partenaires</li>
+                        <li class="fragment" data-fragment-index="1">Recevoir des informations des partenaires</li>
+                        <li class="fragment" data-fragment-index="2">Charger / rafraichir un bloc de manière asynchrone</li>
+                        <li class="fragment" data-fragment-index="3">Charger / rafraichir toute la page de manière asynchrone (Backbone, Angular JS...)</li>
+                        <li class="fragment" data-fragment-index="4">Application mobile</li>
                     </ul>
                 </div>
             </section>
             <section>
                 <h2>Les différents Types d'Api</h2>
-                <div style="text-align: left;">
+                <div>
                     <br>
                 </div>
                 <div>
@@ -107,9 +110,9 @@
             <section>
                 <h2>REST</h2>
                 <div>
-                    <div style="text-align: left;"><span class="fragment highlight-red" data-fragment-index="0">GET</span> <span class="fragment highlight-red" data-fragment-index="1">/api/users</span> HTTP/1.1</div>
-                    <div style="text-align: left;">Host: api.local.pricebuzz.fr</div>
-                    <div style="text-align: left;">Accept: <span class="fragment highlight-red" data-fragment-index="2">text/html</span></div>
+                    <div><span class="fragment highlight-red" data-fragment-index="0">GET</span> <span class="fragment highlight-red" data-fragment-index="1">/api/users</span> HTTP/1.1</div>
+                    <div>Host: api.local.pricebuzz.fr</div>
+                    <div>Accept: <span class="fragment highlight-red" data-fragment-index="2">text/html</span></div>
                 </div>
             </section>
             <section>
@@ -310,7 +313,7 @@ fos_rest:
             </section>
             <section>
                 <h2>Principe d'une session sur un site classique</h2>
-                <div style="text-align: left;">
+                <div>
                     <br>
                 </div>
                 <div>
@@ -321,7 +324,7 @@ fos_rest:
                     </ul>
                 </div>
                 <div class="fragment" data-fragment-index="3">
-                    <div style="text-align: left;">
+                    <div>
                         <br>
                     </div>
                     <div>Permet d'enregistrer:</div>
@@ -334,14 +337,14 @@ fos_rest:
             </section>
             <section>
                 <h2>Principe de l'authentification OAuth 2</h2>
-                <div style="text-align: left;">
+                <div>
                     <br>
                 </div>
                 <div>
                     <strong class="fragment" data-fragment-index="0">Ne s'occupe que de l'authentification et des permissions de l'application sur les informations / actions de l'utilisateur !</strong>
                     <br/><br/>
                     <ul>
-                        <li class="fragment" data-fragment-index="1">récupération du token d'identification:
+                        <li class="fragment" data-fragment-index="1">récupération d'un access_token d'identification:
                             <ul>
                                 <li class="fragment" data-fragment-index="2">dans la query string</li>
                                 <li class="fragment" data-fragment-index="3">dans le corps de la requête</li>
@@ -354,31 +357,96 @@ fos_rest:
                 </div>
             </section>
             <section>
-                <h2>Plusieurs types d'authentification:</h2>
-                <div style="text-align: left;">
+                <h2>Plusieurs methodes d'obtention d'un access_token:</h2>
+                <div>
                     <br>
                 </div>
                 <div>
                     <ul>
-                        <li class="fragment" data-fragment-index="0">password</li>
-                        <li class="fragment" data-fragment-index="1">auth_code</li>
-                        <li class="fragment" data-fragment-index="2">assertion</li>
-                        <li class="fragment" data-fragment-index="3">refresh_token</li>
+                        <li class="fragment" data-fragment-index="0">
+                            redirection avec un hash<br/>
+                            <small><ul>
+                                <li>GET /authenticate_me</li>
+                                <li>client_id=123&scope=email&<span class="red">response_type=token</span></li>
+                                <li class="fragment" data-fragment-index="1">
+                                    Location: myapp.com/validate_auth_code#access_token=...&refresh_token=...&user_id=...
+                                </li>
+                            </ul>
+                            </small>
+                        </li>
+                        <li class="fragment" data-fragment-index="2">
+                            redirection vers le server OAuth en demandant un auth_code<br/>
+                            <small><ul>
+                                <li>GET /authenticate_me</li>
+                                <li>client_id=123&scope=email&<span class="red">response_type=auth_code</span></li>
+                                <li class="fragment" data-fragment-index="3">
+                                    Location: myapp.com/validate_auth_code?auth_code=1234567890abcdef
+                                </li>
+                            </ul>
+                            </small>
+                        </li>
                     </ul>
                 </div>
             </section>
             <section>
-                <h2>Des questions ?</h2>
-                <div style="text-align: left;">
+                <h2>Schema d'btention d'un access_token à partir d'un auth_code:</h2>
+                <div>
                     <br>
                 </div>
+                <div>
+                    <a href="img/oic_flowchart.png" target="_blank"><img src="img/oic_flowchart.png"/></a>
+                </div>
+            </section>
+            <section>
+                <h2>Plusieurs methodes d'obtention d'un access_token:</h2>
+                <div>
+                    <br>
+                </div>
+                <div>
+                    <ul>
+                        <li>
+                            auth_code<br/>
+                            <small><ul>
+                                <li>POST /token</li>
+                                <li>grant_type=auth_code&client_id=123&scope=email,feed&code=1234567890abcdef</li>
+                            </ul>
+                            </small>
+                        </li>
+                        <li class="fragment" data-fragment-index="0">
+                            password<br/>
+                            <small><ul>
+                                <li>POST /token</li>
+                                <li>grant_type=password&client_id=123&scope=email,feed&username=r.janot@gmail.com&password=symfony</li>
+                            </ul>
+                            </small>
+                        </li>
+                        <li class="fragment" data-fragment-index="2">
+                            assertion<br/>
+                            <small><ul>
+                                <li>POST /token</li>
+                                <li>grant_type=assertion&client_id=123&scope=email,feed&assertion_type=fb_sr&assertion=....</li>
+                            </ul>
+                            </small>
+                        </li>
+                        <li class="fragment" data-fragment-index="3">
+                            refresh_token<br/>
+                            <small><ul>
+                                <li>POST /token</li>
+                                <li>grant_type=refresh_token&client_id=123&scope=email,feed&refresh_token=azertyuiop</li>
+                            </ul>
+                            </small>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <section>
                 <div>
                     <img src="img/questions.png" />
                 </div>
             </section>
             <section>
                 <h2>Liens</h2>
-                <div style="text-align: left;">
+                <div>
                     <br>
                 </div>
                 <div>
