@@ -277,7 +277,36 @@ comments:
                     </code></pre>
                 </div>
             </section>
+            <section>
+                <pre><code>
+// src/Acme/DemoBundle/Controller/TestController.php
+namespace Acme\DemoBundle\Controller;
 
+use FOS\RestBundle\Controller\FOSRestController;
+
+class TestController extends FOSRestController
+{
+    public function getAction()
+    {
+        $data = array(
+            'text'          => 'lol',
+            'assoc_array'   => array(
+                'text'          => 'truc',
+                'number'        => 42,
+                'float'         => 42.24,
+                'empty'         => '',
+            ),
+            'number'        => 1,
+            'simple_array'  => array('symfony','php','zend'),
+        );
+
+        $view = $this->view($data);
+
+        return $this->handleView($view, 200);
+    }
+}
+                </code></pre>
+            </section>
             <section>
                 <h2>FOSRESTBUNDLE</h2>
                 <div>
